@@ -531,14 +531,17 @@ public class StandardService extends LifecycleMBeanBase implements Service {
         super.initInternal();
 
         if (engine != null) {
+            //初始化引擎
             engine.init();
         }
 
         // Initialize any Executors
+
         for (Executor executor : findExecutors()) {
             if (executor instanceof JmxEnabled) {
                 ((JmxEnabled) executor).setDomain(getDomain());
             }
+            //初始化执行器
             executor.init();
         }
 
@@ -549,6 +552,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
         synchronized (connectorsLock) {
             for (Connector connector : connectors) {
                 try {
+                    //初始化连接器
                     connector.init();
                 } catch (Exception e) {
                     String message = sm.getString(

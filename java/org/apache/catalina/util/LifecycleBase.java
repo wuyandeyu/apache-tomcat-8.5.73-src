@@ -133,6 +133,7 @@ public abstract class LifecycleBase implements Lifecycle {
 
         try {
             setStateInternal(LifecycleState.INITIALIZING, null, false);
+            //抽象方法，最终调用的是LifecycleBase实现类（实现类是StandardServer）的方法，采用模板方法设计模式，（把公用的逻辑抽取到父类中，在子类实现一些自己独有逻辑）
             initInternal();
             setStateInternal(LifecycleState.INITIALIZED, null, false);
         } catch (Throwable t) {

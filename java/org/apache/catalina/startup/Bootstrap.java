@@ -249,8 +249,10 @@ public final class Bootstrap {
      */
     public void init() throws Exception {
 
+        //初始化类加载器
         initClassLoaders();
 
+        //通过获得当前线程，设置上下文上类加载器为当前的catalinaLoader
         Thread.currentThread().setContextClassLoader(catalinaLoader);
 
         SecurityClassLoad.securityClassLoad(catalinaLoader);
@@ -302,6 +304,7 @@ public final class Bootstrap {
         if (log.isDebugEnabled()) {
             log.debug("Calling startup class " + method);
         }
+        //调用catalina的load 方法
         method.invoke(catalinaDaemon, param);
     }
 
@@ -342,6 +345,7 @@ public final class Bootstrap {
         }
 
         Method method = catalinaDaemon.getClass().getMethod("start", (Class [])null);
+        //catalina.start()方法调用
         method.invoke(catalinaDaemon, (Object [])null);
     }
 
@@ -472,6 +476,7 @@ public final class Bootstrap {
                 daemon.stop();
             } else if (command.equals("start")) {
                 daemon.setAwait(true);
+                //bootstrap调用load方法
                 daemon.load(args);
                 daemon.start();
                 if (null == daemon.getServer()) {

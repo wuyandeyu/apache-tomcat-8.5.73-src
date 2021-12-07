@@ -840,6 +840,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         }
         // Initialize our defined Services
         for (Service service : services) {
+            //在server中调用了service的init方法，此处用for循环是因为是一个server中可以有多个service
             service.init();
         }
     }
